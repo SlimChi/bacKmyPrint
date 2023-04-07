@@ -22,8 +22,6 @@ import java.util.stream.Collectors;
 public class AdresseSerImpl implements AdresseService {
 
     private final AdresseRepository adresseRepository;
-    private final Utilisateur utilisateur;
-
 
 
     @Override
@@ -40,7 +38,7 @@ public class AdresseSerImpl implements AdresseService {
 
         adresseRepository.save(adresse).getIdUtilisateur();
     }
-
+    @Transactional
     @Override
     public List<AdresseDto> findAll() {
         return adresseRepository.findAll()
@@ -48,7 +46,7 @@ public class AdresseSerImpl implements AdresseService {
                 .map(AdresseDto::fromEntity)
                 .collect(Collectors.toList());
     }
-
+    @Transactional
     @Override
     public AdresseDto findById(Integer id) {
         return adresseRepository.findById(id)

@@ -210,6 +210,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
     @Override
     public AccountResponse resetPassword(NewPassword newPassword, String token) {
+        validate.validate(newPassword);
         var user = utilisateurRepository.findUserByEmail(newPassword.getEmail())
                 .orElseThrow();
 

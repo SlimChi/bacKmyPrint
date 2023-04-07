@@ -1,5 +1,6 @@
 package fr.rt.MyPrintRed.services.password;
 
+import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,5 +11,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ResetPassword {
+    @Email
     private String email;
 }

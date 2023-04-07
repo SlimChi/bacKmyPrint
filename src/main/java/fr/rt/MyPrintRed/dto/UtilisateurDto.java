@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import fr.rt.MyPrintRed.entities.Adresse;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,10 +22,16 @@ import java.util.List;
 public class UtilisateurDto extends HateOas{
 
     private Integer idUtilisateur;
+
+
     private String nom;
+
     private String prenom;
+
     private String email;
+
     private String telephone;
+
     private String password;
     private boolean active = false;
     private List<Adresse> adresse;

@@ -11,6 +11,7 @@ import fr.rt.MyPrintRed.services.token.ConfirmationTokenService;
 import fr.rt.MyPrintRed.validators.ObjectsValidator;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,7 +35,8 @@ public class AuthenticationService {
     private final EmailSendService emailSendService;
     private final ConfirmationTokenService confirmationTokenService;
     private final UtilisateurServiceImpl utilisateurService;
-
+    @Autowired
+    private ObjectsValidator<RegisterRequest> validate;
     private final AuthenticationManager authenticationManager;
 
 
@@ -272,7 +274,7 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse registerAdmin(RegisterRequest request) {
-
+        validator.validate(request);
         Optional<Utilisateur> userOptional = repository.findUserByEmail(request.getEmail());
 
         if(userOptional.isPresent())
@@ -312,6 +314,7 @@ public class AuthenticationService {
 
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),request.getPassword()

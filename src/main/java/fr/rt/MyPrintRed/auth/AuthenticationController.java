@@ -1,5 +1,6 @@
 package fr.rt.MyPrintRed.auth;
 
+import fr.rt.MyPrintRed.validators.ObjectsValidator;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,19 +13,20 @@ import org.springframework.web.bind.annotation.*;
 public class AuthenticationController {
 
     private final AuthenticationService service;
-
+    private final ObjectsValidator validator;
 
 
     @PostMapping("register")
-    public ResponseEntity<AuthenticationResponse> registerUser(@RequestBody RegisterRequest request){
 
+    public ResponseEntity<AuthenticationResponse> registerUser(@RequestBody RegisterRequest request){
+        validator.validate(request);
         return ResponseEntity.ok(service.registerUser(request));
 
     }
 
     @PostMapping("register/admin")
     public ResponseEntity<AuthenticationResponse> registerAdmin(@RequestBody RegisterRequest request){
-
+        validator.validate(request);
         return ResponseEntity.ok(service.registerAdmin(request));
 
     }
