@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
-    private static final String[] UNSECURED_URL = {
+    private static final String[] UNSECURED_URL={
             "/v2/api-docs",
             "/v3/api-docs",
             "/v3/api-docs/**",
@@ -30,21 +30,20 @@ public class WebSecurityConfig {
             "/mail/**",
             "/checkEmail/**",
             "/resetPassword/{token}/**",
-            "/auth/**",
-            "/fichiers/**",
+            "/auth/**"
 
     };
-    private static final String[] SECURED_URL_ADMIN = {
+    private static final String[] SECURED_URL_ADMIN={
             "intervenirs/**",
             "options/**",
             "typeoptions/**",
             "categories/**",
 
     };
-    private static final String[] SECURED_URL_STAFF = {
+    private static final String[] SECURED_URL_STAFF={
 
     };
-    private static final String[] SECURED_URL_USER = {
+    private static final String[] SECURED_URL_USER={
             "/fichiers/**",
             "/utilisateurs/**",
             "/adresses/**",
@@ -56,7 +55,7 @@ public class WebSecurityConfig {
     };
 
 
-    private final JwtAuthenticationFilter jwtAuthFilter;
+    private final JwtAuthenticationFilter  jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
 
 
@@ -73,11 +72,11 @@ public class WebSecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers(SECURED_URL_USER)
-                .hasAnyAuthority("USER", "STAF", "ADMIN")
+                .hasAnyAuthority("USER","STAF","ADMIN")
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers(SECURED_URL_STAFF)
-                .hasAnyAuthority("STAF", "ADMIN")
+                .hasAnyAuthority("STAF","ADMIN")
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers(SECURED_URL_ADMIN)
@@ -91,6 +90,7 @@ public class WebSecurityConfig {
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .cors();
+
 
 
         return http.build();
