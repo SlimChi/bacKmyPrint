@@ -30,18 +30,22 @@ public class FichierController {
     private final FichierService storageService;
 
     @PostMapping("")
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<ResponseMessage> uploadFiles(@RequestParam("file") List<MultipartFile> files) {
         String message = "";
-        try {
-            storageService.store(file);
 
-            message = "Uploaded the file successfully: " + file.getOriginalFilename();
+        try {
+            for (MultipartFile file : files) {
+                storageService.store(file);
+            }
+
+            message = "Uploaded " + files.size() + " files successfully.";
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
         } catch (Exception e) {
-            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+            message = "Could not upload the files!";
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
         }
     }
+
 
     @GetMapping("")
     public ResponseEntity getFichiers(){
