@@ -1,20 +1,24 @@
 package fr.rt.MyPrintRed.services.impl;
 
 
-import fr.rt.MyPrintRed.dto.CommandeDto;
-import fr.rt.MyPrintRed.dto.InsertCommandeDto;
-import fr.rt.MyPrintRed.dto.StatusDto;
+import fr.rt.MyPrintRed.dto.*;
 import fr.rt.MyPrintRed.entities.Commande;
+import fr.rt.MyPrintRed.entities.Fichier;
 import fr.rt.MyPrintRed.entities.Status;
 import fr.rt.MyPrintRed.mapper.CommandeMapper;
+import fr.rt.MyPrintRed.mapper.LigneCommandeMapper;
 import fr.rt.MyPrintRed.repositories.CommandeRepository;
 import fr.rt.MyPrintRed.repositories.StatusRepository;
 import fr.rt.MyPrintRed.services.CommandeService;
+import fr.rt.MyPrintRed.services.FichierService;
+import fr.rt.MyPrintRed.services.LigneCommandeService;
 import fr.rt.MyPrintRed.services.StatusService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +30,12 @@ public class CommandeServiceImpl implements CommandeService {
     private final CommandeRepository commandeRepository;
     private final CommandeMapper commandeMapper;
 
+    private final LigneCommandeService ligneCommandeService;
+
     private final StatusRepository statusRepository;
+
+    private final FichierService fichierService;
+
 
     @Override
     public List<CommandeDto> getCommandes() {
@@ -69,4 +78,37 @@ public class CommandeServiceImpl implements CommandeService {
         return commandeMapper.toDto(commandeRepository.save(commande));
 
     }
+
+    @Override
+    public CommandeDto insertFullCommande(InsertFullCommandeDto commande) {
+
+        CommandeDto commandeDto = insert(commande.getCommandeDto());
+
+
+        for(InsertLigneCommandeDto ligne : commande.getLigneCommandesDto()){
+            ligne.setNumeroCommande(commandeDto.getNumeroCommande());
+            ligneCommandeService.insert(ligne);
+        }
+
+        return commandeDto;
+    }
+
+    @Override
+    public CommandeDto insertFullCommandeFichier(InsertFullCommandeDto commande, List<MultipartFile> fichiers) throws IOException {
+        CommandeDto commandeDto = insert(commande.getCommandeDto());
+
+        for(int i=0;i< fichiers.size();i++){
+            Fichier fichier = fichierService.store(fichiers.get(i));
+            commande.getLigneCommandesDto().get(i).setIdFichier(fichier.getIdFichier());
+        }
+
+        for(InsertLigneCommandeDto ligne : commande.getLigneCommandesDto()){
+
+            ligne.setNumeroCommande(commandeDto.getNumeroCommande());
+            ligneCommandeService.insert(ligne);
+        }
+
+        return commandeDto;
+    }
+
 }

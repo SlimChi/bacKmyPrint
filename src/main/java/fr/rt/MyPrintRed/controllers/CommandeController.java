@@ -3,6 +3,7 @@ package fr.rt.MyPrintRed.controllers;
 
 import fr.rt.MyPrintRed.dto.CommandeDto;
 import fr.rt.MyPrintRed.dto.InsertCommandeDto;
+import fr.rt.MyPrintRed.dto.InsertFullCommandeDto;
 import fr.rt.MyPrintRed.services.CommandeService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import org.mapstruct.Context;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -69,5 +71,32 @@ public class CommandeController {
 
 
 
+    }
+
+    @PostMapping("/full")
+    public ResponseEntity insertFullCommande(@RequestBody InsertFullCommandeDto commandeDto){
+
+        try{
+
+            return ResponseEntity.ok(commandeService.insertFullCommande(commandeDto));
+
+        }catch (Exception e){
+            System.out.println(e);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @PostMapping("/fullfichier")
+    public ResponseEntity insertFullCommandeFichier(@RequestBody InsertFullCommandeDto commandeDto,
+                                                    @RequestParam("fichiers") List<MultipartFile> fichiers){
+
+        try{
+
+            return ResponseEntity.ok(commandeService.insertFullCommandeFichier(commandeDto,fichiers));
+
+        }catch (Exception e){
+            System.out.println(e);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
 }
