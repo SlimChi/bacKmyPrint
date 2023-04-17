@@ -15,10 +15,44 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
-    private static final String[] UNSECURED_URL={};
-    private static final String[] SECURED_URL_ADMIN={};
-    private static final String[] SECURED_URL_STAFF={};
-    private static final String[] SECURED_URL_USER={};
+    private static final String[] UNSECURED_URL={
+            "/v2/api-docs",
+            "/v3/api-docs",
+            "/v3/api-docs/**",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui/**",
+            "/webjars/**",
+            "/swagger-ui.html",
+
+            "/mail/**",
+            "/checkEmail/**",
+            "/resetPassword/{token}/**",
+            "/auth/**"
+
+    };
+    private static final String[] SECURED_URL_ADMIN={
+            "intervenirs/**",
+            "options/**",
+            "typeoptions/**",
+            "categories/**",
+
+    };
+    private static final String[] SECURED_URL_STAFF={
+
+    };
+    private static final String[] SECURED_URL_USER={
+            "/fichiers/**",
+            "/utilisateurs/**",
+            "/adresses/**",
+            "/commandes/**",
+            "/lignecommandes/**",
+            "/statuses/**",
+            "/optionlignecommandes",
+            "optioncategories"
+    };
 
 
     private final JwtAuthenticationFilter  jwtAuthFilter;
@@ -33,27 +67,20 @@ public class WebSecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/v2/api-docs",
-                        "/v3/api-docs",
-                        "/v3/api-docs/**",
-                        "/swagger-resources",
-                        "/swagger-resources/**",
-                        "/configuration/ui",
-                        "/configuration/security",
-                        "/swagger-ui/**",
-                        "/webjars/**",
-                        "/swagger-ui.html",
-                        "/mail/**",
-                        "/checkEmail/**",
-                        "/resetPassword/{token}/**",
-                        "/auth/**",
-                        "/fichiers/**",
-                        "/utilisateurs/**"
-
-                )
+                .requestMatchers(UNSECURED_URL)
                 .permitAll()
-                .requestMatchers("/hello")
-                .hasAnyAuthority("USER","STAFF","ADMIN")
+                .and()
+                .authorizeHttpRequests()
+                .requestMatchers(SECURED_URL_USER)
+                .hasAnyAuthority("USER","STAF","ADMIN")
+                .and()
+                .authorizeHttpRequests()
+                .requestMatchers(SECURED_URL_STAFF)
+                .hasAnyAuthority("STAF","ADMIN")
+                .and()
+                .authorizeHttpRequests()
+                .requestMatchers(SECURED_URL_ADMIN)
+                .hasAnyAuthority("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
