@@ -16,4 +16,5 @@ import java.math.BigDecimal;
 public class PurchaseDto {
     private String nonce;
     private BigDecimal amount;
+
 }
