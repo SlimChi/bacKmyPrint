@@ -3,6 +3,7 @@ package fr.rt.MyPrintRed.services.impl;
 
 import fr.rt.MyPrintRed.dto.OptionDto;
 import fr.rt.MyPrintRed.entities.Option;
+import fr.rt.MyPrintRed.exceptions.OptionNotFoundException;
 import fr.rt.MyPrintRed.mapper.OptionMapper;
 import fr.rt.MyPrintRed.repositories.OptionRepository;
 import fr.rt.MyPrintRed.services.OptionService;
@@ -27,7 +28,7 @@ public class OptionServiceImpl implements OptionService {
 
     @Override
     public OptionDto getOptionById(Integer idOption) {
-        return optionMapper.toDto(optionRepository.findById(idOption).orElseThrow());
+        return optionMapper.toDto(optionRepository.findById(idOption).orElseThrow(()-> new OptionNotFoundException(idOption)));
     }
 
     @Override
@@ -38,7 +39,7 @@ public class OptionServiceImpl implements OptionService {
     @Override
     public OptionDto update(Integer idOption, OptionDto optionDto) {
 
-        optionRepository.findById(idOption).orElseThrow();
+        optionRepository.findById(idOption).orElseThrow(()-> new OptionNotFoundException( idOption));
         optionDto.setIdOption(idOption);
         Option option = optionMapper.toEntity(optionDto);
         return optionMapper.toDto(optionRepository.save(option));
@@ -47,7 +48,7 @@ public class OptionServiceImpl implements OptionService {
 
     @Override
     public void deleteById(Integer idOption) {
-        optionRepository.findById(idOption).orElseThrow();
+        optionRepository.findById(idOption).orElseThrow(()-> new OptionNotFoundException(idOption));
         optionRepository.deleteById(idOption);
     }
 }

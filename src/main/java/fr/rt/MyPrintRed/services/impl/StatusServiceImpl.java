@@ -2,6 +2,7 @@ package fr.rt.MyPrintRed.services.impl;
 
 import fr.rt.MyPrintRed.dto.StatusDto;
 import fr.rt.MyPrintRed.entities.Status;
+import fr.rt.MyPrintRed.exceptions.StatusNotFoundException;
 import fr.rt.MyPrintRed.mapper.StatusMapper;
 import fr.rt.MyPrintRed.repositories.StatusRepository;
 import fr.rt.MyPrintRed.services.StatusService;
@@ -28,7 +29,7 @@ public class StatusServiceImpl implements StatusService {
 
     @Override
     public StatusDto getById(Integer idStatus) {
-        return statusMapper.toDto(statusRepository.findById(idStatus).orElseThrow());
+        return statusMapper.toDto(statusRepository.findById(idStatus).orElseThrow(()-> new StatusNotFoundException(idStatus)));
     }
 
     @Override
@@ -41,7 +42,7 @@ public class StatusServiceImpl implements StatusService {
     @Override
     public StatusDto update(Integer idStatus, StatusDto statusDto) {
 
-        statusRepository.findById(idStatus).orElseThrow();
+        statusRepository.findById(idStatus).orElseThrow(()-> new StatusNotFoundException(idStatus));
         statusDto.setIdStatus(idStatus);
         Status status = statusMapper.toEntity(statusDto);
         return statusMapper.toDto(statusRepository.save(status));
@@ -50,7 +51,7 @@ public class StatusServiceImpl implements StatusService {
 
     @Override
     public void deleteById(Integer idStatus) {
-        statusRepository.findById(idStatus).orElseThrow();
+        statusRepository.findById(idStatus).orElseThrow(()-> new StatusNotFoundException(idStatus));
         statusRepository.deleteById(idStatus);
     }
 }

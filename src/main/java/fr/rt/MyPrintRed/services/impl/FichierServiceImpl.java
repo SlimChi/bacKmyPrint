@@ -3,6 +3,7 @@ package fr.rt.MyPrintRed.services.impl;
 
 import fr.rt.MyPrintRed.dto.FichierDto;
 import fr.rt.MyPrintRed.entities.Fichier;
+import fr.rt.MyPrintRed.exceptions.FichierNotFoundException;
 import fr.rt.MyPrintRed.mapper.FichierMapper;
 import fr.rt.MyPrintRed.repositories.FichierRepository;
 import fr.rt.MyPrintRed.services.FichierService;
@@ -36,7 +37,7 @@ public class FichierServiceImpl implements FichierService {
 
     @Override
     public Fichier getFile(Integer id) {
-        return repository.findById(id).orElseThrow();
+        return repository.findById(id).orElseThrow(()-> new FichierNotFoundException(id));
     }
 
     @Override
@@ -46,6 +47,6 @@ public class FichierServiceImpl implements FichierService {
 
     @Override
     public FichierDto getById(Integer idFichier) {
-        return mapper.toDto(repository.findById(idFichier).orElseThrow());
+        return mapper.toDto(repository.findById(idFichier).orElseThrow(()-> new FichierNotFoundException(idFichier)));
     }
 }

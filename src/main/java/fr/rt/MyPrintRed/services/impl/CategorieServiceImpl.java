@@ -2,6 +2,7 @@ package fr.rt.MyPrintRed.services.impl;
 
 import fr.rt.MyPrintRed.dto.CategorieDto;
 import fr.rt.MyPrintRed.entities.Categorie;
+import fr.rt.MyPrintRed.exceptions.CategorieNotFoundException;
 import fr.rt.MyPrintRed.mapper.CategorieMapper;
 import fr.rt.MyPrintRed.repositories.CategorieRepository;
 import fr.rt.MyPrintRed.services.CategorieService;
@@ -30,7 +31,7 @@ public class CategorieServiceImpl implements CategorieService {
     @Override
     public CategorieDto update(Integer idCategorie,CategorieDto categorieDto) {
 
-        categorieRepository.findById(idCategorie).orElseThrow();
+        categorieRepository.findById(idCategorie).orElseThrow(()-> new CategorieNotFoundException(idCategorie));
         categorieDto.setIdCategorie(idCategorie);
         Categorie categorie = categorieMapper.toEntity(categorieDto);
         return categorieMapper.toDto(categorieRepository.save(categorie));
@@ -44,12 +45,12 @@ public class CategorieServiceImpl implements CategorieService {
 
     @Override
     public CategorieDto getById(Integer idCategorie) {
-        return categorieMapper.toDto(categorieRepository.findById(idCategorie).orElseThrow());
+        return categorieMapper.toDto(categorieRepository.findById(idCategorie).orElseThrow(()-> new CategorieNotFoundException(idCategorie)));
     }
 
     @Override
     public void deleteById(Integer idCategorie) {
-        categorieRepository.findById(idCategorie).orElseThrow();
+        categorieRepository.findById(idCategorie).orElseThrow(()-> new CategorieNotFoundException(idCategorie));
         categorieRepository.deleteById(idCategorie);
     }
 }

@@ -5,6 +5,7 @@ import fr.rt.MyPrintRed.dto.*;
 import fr.rt.MyPrintRed.entities.Commande;
 import fr.rt.MyPrintRed.entities.Fichier;
 import fr.rt.MyPrintRed.entities.Status;
+import fr.rt.MyPrintRed.exceptions.CommandeNotFoundException;
 import fr.rt.MyPrintRed.mapper.CommandeMapper;
 import fr.rt.MyPrintRed.mapper.LigneCommandeMapper;
 import fr.rt.MyPrintRed.repositories.CommandeRepository;
@@ -44,7 +45,7 @@ public class CommandeServiceImpl implements CommandeService {
 
     @Override
     public CommandeDto getById(Integer numeroCommande) {
-        return commandeMapper.toDto(commandeRepository.findById(numeroCommande).orElseThrow());
+        return commandeMapper.toDto(commandeRepository.findById(numeroCommande).orElseThrow(()->new CommandeNotFoundException(numeroCommande)));
     }
 
     @Override
@@ -70,7 +71,7 @@ public class CommandeServiceImpl implements CommandeService {
     @Override
     public CommandeDto updateStatus(Integer numeroCommande, Integer idStatus) {
 
-        Commande commande = commandeRepository.findById(numeroCommande).orElseThrow();
+        Commande commande = commandeRepository.findById(numeroCommande).orElseThrow(()->new CommandeNotFoundException(numeroCommande));
 
         Status status = statusRepository.getById(idStatus);
         commande.setStatus(status);

@@ -5,6 +5,7 @@ import fr.rt.MyPrintRed.dto.UtilisateurDto;
 import fr.rt.MyPrintRed.dto.InsertUtilisateurDto;
 import fr.rt.MyPrintRed.entities.Adresse;
 import fr.rt.MyPrintRed.entities.Utilisateur;
+import fr.rt.MyPrintRed.exceptions.UserNotFoundException;
 import fr.rt.MyPrintRed.mapper.UtilisateurMapper;
 import fr.rt.MyPrintRed.repositories.AdresseRepository;
 import fr.rt.MyPrintRed.repositories.UtilisateurRepository;
@@ -68,13 +69,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
         Optional<Utilisateur> utilisateur = utilisateurRepository.findById(idUtilisateur);
 
-        return utilisateurMapper.toDto(utilisateur.orElseThrow());
+        return utilisateurMapper.toDto(utilisateur.orElseThrow(()-> new UserNotFoundException(idUtilisateur)));
     }
 
     @Override
     public UtilisateurDto updateUtilisateur(Integer idUtilisateur, InsertUtilisateurDto utilisateurDto) {
 
-        Utilisateur utilisateur = utilisateurRepository.findById(idUtilisateur).orElseThrow();
+        Utilisateur utilisateur = utilisateurRepository.findById(idUtilisateur).orElseThrow(()-> new UserNotFoundException(idUtilisateur));
 
         utilisateur.setNom(utilisateurDto.getNom());
         utilisateur.setPrenom(utilisateurDto.getPrenom());
@@ -89,7 +90,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
     @Override
     public UtilisateurDto updateUtilisateurPassword(Integer idUtilisateur, PasswordDto passwordDto) {
-        Utilisateur utilisateur = utilisateurRepository.findById(idUtilisateur).orElseThrow();
+        Utilisateur utilisateur = utilisateurRepository.findById(idUtilisateur).orElseThrow(()-> new UserNotFoundException(idUtilisateur));
 
         utilisateur.setPassword(passwordEncoder.encode(passwordDto.getPassword()));
 
@@ -232,7 +233,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     @Transactional
     public void updateUser(Integer id, String firstName, String lastName, String email, String telephone) {
 
-        Utilisateur updateUser = utilisateurRepository.findById(id).orElseThrow();
+        Utilisateur updateUser = utilisateurRepository.findById(id).orElseThrow(()-> new UserNotFoundException(id));
 
         updateUser.setIdUtilisateur(id);
         updateUser.setEmail(email);
@@ -246,7 +247,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     @Transactional
     public void deleteUser(Integer userId) {
         // Find the user by ID
-        Utilisateur user = utilisateurRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        Utilisateur user = utilisateurRepository.findById(userId).orElseThrow(()-> new UserNotFoundException(userId));
         // Delete the user
         utilisateurRepository.delete(user);
     }
@@ -255,7 +256,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     @Transactional
     public void deleteUserAndAddresses(Integer userId) {
         // Find the user by ID
-        Utilisateur user = utilisateurRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        Utilisateur user = utilisateurRepository.findById(userId).orElseThrow(()-> new UserNotFoundException(userId));
 
         // Delete all the user's addresses
         for (Adresse adresse : user.getAdresse()) {

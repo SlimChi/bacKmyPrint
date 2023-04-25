@@ -6,6 +6,7 @@ import fr.rt.MyPrintRed.dto.LigneCommandeDto;
 import fr.rt.MyPrintRed.entities.LigneCommande;
 import fr.rt.MyPrintRed.entities.LigneCommandePK;
 import fr.rt.MyPrintRed.entities.Status;
+import fr.rt.MyPrintRed.exceptions.LigneCommandeNotFoundException;
 import fr.rt.MyPrintRed.mapper.LigneCommandeMapper;
 import fr.rt.MyPrintRed.repositories.LigneCommandeRepository;
 import fr.rt.MyPrintRed.repositories.StatusRepository;
@@ -40,7 +41,8 @@ public class LigneCommandeServiceImpl implements LigneCommandeService {
 
     @Override
     public LigneCommandeDto getAllByNumeros(Integer numeroCommande, Integer numeroLigneCommande) {
-        return mapper.toDto(repository.findById(new LigneCommandePK(numeroCommande,numeroLigneCommande)).orElseThrow());
+        return mapper.toDto(repository.findById(new LigneCommandePK(numeroCommande,numeroLigneCommande))
+                .orElseThrow(()-> new LigneCommandeNotFoundException(numeroCommande,numeroLigneCommande)));
     }
 
     @Override

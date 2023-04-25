@@ -4,6 +4,7 @@ package fr.rt.MyPrintRed.services.impl;
 import fr.rt.MyPrintRed.dto.TypeOptionDto;
 import fr.rt.MyPrintRed.entities.TypeOption;
 import fr.rt.MyPrintRed.entities.TypeOptionPK;
+import fr.rt.MyPrintRed.exceptions.TypeOptionNotFoundException;
 import fr.rt.MyPrintRed.mapper.TypeOptionMapper;
 import fr.rt.MyPrintRed.repositories.TypeOptionRepository;
 import fr.rt.MyPrintRed.services.TypeOptionService;
@@ -49,7 +50,7 @@ public class TypeOptionServiceImpl implements TypeOptionService {
     @Override
     public TypeOptionDto update(Integer idOption, Integer idTypeOption, TypeOptionDto typeOptionDto) {
 
-        repository.findById(new TypeOptionPK(idOption,idTypeOption)).orElseThrow();
+        repository.findById(new TypeOptionPK(idOption,idTypeOption)).orElseThrow(()-> new TypeOptionNotFoundException(idOption,idTypeOption));
         typeOptionDto.setIdOption(idOption);
         typeOptionDto.setIdTypeOption(idTypeOption);
         TypeOption typeOption = mapper.toEntity(typeOptionDto);
@@ -59,7 +60,7 @@ public class TypeOptionServiceImpl implements TypeOptionService {
 
     @Override
     public void deleteById(Integer idOption, Integer idTypeOption) {
-        repository.findById(new TypeOptionPK(idOption,idTypeOption)).orElseThrow();
+        repository.findById(new TypeOptionPK(idOption,idTypeOption)).orElseThrow(()-> new TypeOptionNotFoundException(idOption,idTypeOption));
         repository.deleteById(new TypeOptionPK(idOption,idTypeOption));
     }
 
