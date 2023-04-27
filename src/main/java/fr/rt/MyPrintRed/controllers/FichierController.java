@@ -29,7 +29,7 @@ public class FichierController {
 
     private final FichierService storageService;
 
-    @PostMapping("")
+    @PostMapping("/uploadFiles")
     public ResponseEntity<ResponseMessage> uploadFiles(@RequestParam("file") List<MultipartFile> files) {
         String message = "";
 
@@ -43,6 +43,19 @@ public class FichierController {
         } catch (Exception e) {
             message = "Could not upload the files!";
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+        }
+    }
+
+
+    @PostMapping("")
+    public ResponseEntity upload(@RequestParam("file") MultipartFile file){
+
+        try{
+
+            return ResponseEntity.ok(storageService.store(file));
+        }catch (Exception e){
+
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
         }
     }
 
