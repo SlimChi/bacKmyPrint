@@ -16,6 +16,8 @@ public class AuthenticationController {
     private final ObjectsValidator validator;
 
 
+
+
     @PostMapping("register")
 
     public ResponseEntity<AuthenticationResponse> registerUser(@RequestBody RegisterRequest request){
