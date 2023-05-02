@@ -86,18 +86,6 @@ public class UtilisateurController {
 
     }
 
-    @PostMapping("/checkEmail")
-    public AccountResponse resetPasswordEmail(@RequestBody ResetPassword resetPassword){
-        validator.validate(resetPassword);
-        var accountResponse = utilisateurService.checkEmail(resetPassword);
-        return accountResponse;
-    }
-
-    @PostMapping("/resetPassword/{token}")
-    public AccountResponse resetPassword(@RequestBody NewPassword newPassword, @PathVariable String token) {
-        return utilisateurService.resetPassword(newPassword, token);
-    }
-
 
     @PutMapping("/UpdateUserById/{idUtilisateur}")
     public ResponseEntity<Void> updateUser(@PathParam("user-id") Integer id,

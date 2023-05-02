@@ -1,5 +1,9 @@
 package fr.rt.MyPrintRed.auth;
 
+import fr.rt.MyPrintRed.request.AccountResponse;
+import fr.rt.MyPrintRed.services.UtilisateurService;
+import fr.rt.MyPrintRed.services.password.NewPassword;
+import fr.rt.MyPrintRed.services.password.ResetPassword;
 import fr.rt.MyPrintRed.validators.ObjectsValidator;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +18,7 @@ public class AuthenticationController {
 
     private final AuthenticationService service;
     private final ObjectsValidator validator;
-
+    private final UtilisateurService utilisateurService;
 
 
 
@@ -45,5 +49,18 @@ public class AuthenticationController {
         return service.confirmToken(token);
     }
 
+
+    @PostMapping("/checkEmail")
+    public AccountResponse resetPasswordEmail(@RequestBody ResetPassword resetPassword){
+        validator.validate(resetPassword);
+        var accountResponse = utilisateurService.checkEmail(resetPassword);
+        return accountResponse;
+    }
+
+
+    @PostMapping("/resetPassword/{token}")
+    public AccountResponse resetPassword(@RequestBody NewPassword newPassword, @PathVariable String token) {
+        return utilisateurService.resetPassword(newPassword, token);
+    }
 
 }

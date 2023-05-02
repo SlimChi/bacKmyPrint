@@ -28,6 +28,9 @@ public class LigneCommande {
     @Column(name = "couleur")
     private boolean couleur;
     @Basic
+    @Column(name = "format")
+    private String format;
+    @Basic
     @Column(name = "nombre_exemplaire")
     private int nombreExemplaire;
     @Basic

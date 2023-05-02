@@ -28,7 +28,6 @@ public class WebSecurityConfig {
             "/swagger-ui.html",
             "/mail/**",
             "/api/**",
-            "/checkEmail/**",
             "/resetPassword/{token}/**",
             "/auth/**",
 
