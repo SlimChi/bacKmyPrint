@@ -48,7 +48,7 @@ public class AdresseController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity updateAdress(@PathParam("id")Integer id,
+    public ResponseEntity<Void> updateAdress(@PathParam("id")Integer id,
                                      @RequestParam String rue,
                                      @RequestParam String complement,
                                      @RequestParam String codePostal,

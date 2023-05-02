@@ -2,6 +2,10 @@ package fr.rt.MyPrintRed.controllers;
 
 public class BaseUrl {
 
+    private BaseUrl(){
+
+    }
+
     private static String URL = "http://localhost:8080/";
     final static String FRONT_BASE_URL ="http://localhost:4200";
     final static String UTILISATEUR_BASE_URL = URL+"adresseutilisateur";

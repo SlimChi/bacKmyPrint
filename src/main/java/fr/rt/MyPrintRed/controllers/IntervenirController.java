@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static fr.rt.MyPrintRed.controllers.BaseUrl.FRONT_BASE_URL;
 
 @RestController
@@ -22,17 +24,17 @@ public class IntervenirController {
     private final IntervenirService service;
 
     @GetMapping("")
-    public ResponseEntity getAll(){
+    public ResponseEntity<List<IntervenirDto>> getAll(){
         return ResponseEntity.ok(service.getAll());
     }
 
     @GetMapping("{numeroCommande}")
-    public ResponseEntity getAllByNumeroCommande(@PathVariable("numeroCommande") Integer numeroCommande){
+    public ResponseEntity<List<IntervenirDto>> getAllByNumeroCommande(@PathVariable("numeroCommande") Integer numeroCommande){
         return ResponseEntity.ok(service.getAllByNumeroCommande(numeroCommande));
     }
 
     @PostMapping("")
-    public ResponseEntity insert(@RequestBody InsertIntervenirDto dto){
+    public ResponseEntity<IntervenirDto> insert(@RequestBody InsertIntervenirDto dto){
 
         try{
             return ResponseEntity.ok(service.insert(dto));

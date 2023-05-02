@@ -50,7 +50,7 @@ public class UtilisateurController {
     }
 
     @GetMapping("{idUtilisateur}")
-    public ResponseEntity getUtilisateurById(HttpServletRequest request,@PathVariable("idUtilisateur") Integer idUtilisateur) {
+    public ResponseEntity<UtilisateurDto> getUtilisateurById(HttpServletRequest request,@PathVariable("idUtilisateur") Integer idUtilisateur) {
 
         String uriBase = request.getRequestURL().toString();
         try {
@@ -67,7 +67,7 @@ public class UtilisateurController {
     }
 
     @PutMapping("{idUtilisateur}/update")
-    public ResponseEntity updateUtilisateurById(@PathVariable("idUtilisateur") Integer idUtilisateur,
+    public ResponseEntity<UtilisateurDto> updateUtilisateurById(@PathVariable("idUtilisateur") Integer idUtilisateur,
                                                 @RequestBody InsertUtilisateurDto insertUtilisateurDto) {
 
 
@@ -77,7 +77,7 @@ public class UtilisateurController {
     }
 
     @PutMapping("{idUtilisateur}/updatepassword")
-    public ResponseEntity updatePasswordUtilisateurById(@PathVariable("idUtilisateur") Integer idUtilisateur,
+    public ResponseEntity<UtilisateurDto> updatePasswordUtilisateurById(@PathVariable("idUtilisateur") Integer idUtilisateur,
                                                 @RequestBody PasswordDto passwordDto) {
 
 
@@ -100,7 +100,7 @@ public class UtilisateurController {
 
 
     @PutMapping("/UpdateUserById/{idUtilisateur}")
-    public ResponseEntity updateUser(@PathParam("user-id") Integer id,
+    public ResponseEntity<Void> updateUser(@PathParam("user-id") Integer id,
                                      @RequestParam String firstName,
                                      @RequestParam String lastName,
                                      @RequestParam String email,
@@ -119,7 +119,7 @@ public class UtilisateurController {
     }
 
     @PostMapping("/{id}/addAdresseToUser")
-    public ResponseEntity addAdresseToUser(@RequestBody AdresseDto adresse) {
+    public ResponseEntity<UtilisateurDto> addAdresseToUser(@RequestBody AdresseDto adresse) {
 
         adresseSer.addAdresseToUser(adresse);
         return ResponseEntity.ok().build();

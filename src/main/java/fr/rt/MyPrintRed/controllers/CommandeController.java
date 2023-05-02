@@ -30,7 +30,7 @@ public class CommandeController {
     private final CommandeService commandeService;
 
     @GetMapping("")
-    public ResponseEntity getCommandes(HttpServletRequest request){
+    public ResponseEntity<List<CommandeDto>> getCommandes(HttpServletRequest request){
 
         String uriBase = request.getRequestURL().toString();
 
@@ -44,23 +44,23 @@ public class CommandeController {
     }
 
     @GetMapping("{numeroCommande}")
-    public ResponseEntity getCommandesByNumero(@PathVariable("numeroCommande")Integer numeroCommande){
+    public ResponseEntity<CommandeDto> getCommandesByNumero(@PathVariable("numeroCommande")Integer numeroCommande){
         return ResponseEntity.ok(commandeService.getById(numeroCommande));
     }
 
     @GetMapping("utilisateur/{idUtilisateur}")
-    public ResponseEntity getCommandesByIdUser(@PathVariable("idUtilisateur")Integer idUtilisateur){
+    public ResponseEntity<List<CommandeDto>> getCommandesByIdUser(@PathVariable("idUtilisateur")Integer idUtilisateur){
 
         return ResponseEntity.ok(commandeService.getAllByIdUtilisateur(idUtilisateur));
     }
 
     @PostMapping("")
-    public ResponseEntity insert(@RequestBody InsertCommandeDto insertCommandeDto){
+    public ResponseEntity<CommandeDto> insert(@RequestBody InsertCommandeDto insertCommandeDto){
         return ResponseEntity.ok(commandeService.insert(insertCommandeDto));
     }
 
     @PutMapping("{numeroCommande}/{newIdStatus}")
-    public ResponseEntity updateStatus(@PathVariable("numeroCommande")Integer numeroCommande,
+    public ResponseEntity<CommandeDto> updateStatus(@PathVariable("numeroCommande")Integer numeroCommande,
                                        @PathVariable("newIdStatus")Integer newIdStatus){
 
         try{
@@ -74,20 +74,19 @@ public class CommandeController {
     }
 
     @PostMapping("/full")
-    public ResponseEntity insertFullCommande(@RequestBody InsertFullCommandeDto commandeDto){
+    public ResponseEntity<CommandeDto> insertFullCommande(@RequestBody InsertFullCommandeDto commandeDto){
 
         try{
 
             return ResponseEntity.ok(commandeService.insertFullCommande(commandeDto));
 
         }catch (Exception e){
-            System.out.println(e);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
 
     @PostMapping("/fullfichier")
-    public ResponseEntity insertFullCommandeFichier(@RequestBody InsertFullCommandeDto commandeDto,
+    public ResponseEntity<CommandeDto> insertFullCommandeFichier(@RequestBody InsertFullCommandeDto commandeDto,
                                                     @RequestParam("fichiers") List<MultipartFile> fichiers){
 
         try{
@@ -95,7 +94,6 @@ public class CommandeController {
             return ResponseEntity.ok(commandeService.insertFullCommandeFichier(commandeDto,fichiers));
 
         }catch (Exception e){
-            System.out.println(e);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }

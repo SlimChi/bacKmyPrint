@@ -57,7 +57,6 @@ public class OptionCategorieMapperImpl implements OptionCategorieMapper {
     @Override
     public OptionCategorie toEntityWithIds(Integer idCategorie, Integer idOption, Integer idTypeOption) {
 
-        OptionCategorie optionCategorie = new OptionCategorie();
 
 
 

@@ -1,6 +1,7 @@
 package fr.rt.MyPrintRed.controllers;
 
 
+import fr.rt.MyPrintRed.dto.OptionCategorieDto;
 import fr.rt.MyPrintRed.dto.OptionDto;
 import fr.rt.MyPrintRed.services.OptionService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -8,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static fr.rt.MyPrintRed.controllers.BaseUrl.FRONT_BASE_URL;
 
@@ -21,28 +24,28 @@ public class OptionController {
     private final OptionService optionService;
 
     @GetMapping("")
-    public ResponseEntity getOptions(){
+    public ResponseEntity<List<OptionDto>> getOptions(){
         return ResponseEntity.ok(optionService.getOptions());
     }
 
     @GetMapping("{idOption}")
-    public ResponseEntity getOptionsById(@PathVariable("idOption")Integer idOption){
+    public ResponseEntity<OptionDto> getOptionsById(@PathVariable("idOption")Integer idOption){
         return ResponseEntity.ok(optionService.getOptionById(idOption));
     }
 
     @PostMapping("")
-    public ResponseEntity insert(@RequestBody OptionDto optionDto){
+    public ResponseEntity<OptionDto> insert(@RequestBody OptionDto optionDto){
         return ResponseEntity.ok(optionService.insert(optionDto));
     }
 
     @PutMapping("{idOption}")
-    public ResponseEntity update(@PathVariable("idOption")Integer idOption,
-                                 @RequestBody OptionDto optionDto){
+    public ResponseEntity<OptionDto> update(@PathVariable("idOption")Integer idOption,
+                                                     @RequestBody OptionDto optionDto){
         return ResponseEntity.ok(optionService.update(idOption,optionDto));
     }
 
     @DeleteMapping("{idOption}")
-    public ResponseEntity deleteById(@PathVariable("idOption")Integer idOption){
+    public ResponseEntity<Void> deleteById(@PathVariable("idOption")Integer idOption){
         try{
             optionService.deleteById(idOption);
             return ResponseEntity.ok().build();

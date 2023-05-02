@@ -73,7 +73,6 @@ public class AdresseSerImpl implements AdresseService {
 
     @Override
     public void delete(Integer id) {
-        // todo check delete
         adresseRepository.deleteById(id);
     }
 

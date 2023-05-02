@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static fr.rt.MyPrintRed.controllers.BaseUrl.FRONT_BASE_URL;
 
 @RestController
@@ -22,30 +24,30 @@ public class TypeOptionController {
     private final TypeOptionService service;
 
     @GetMapping("")
-    public ResponseEntity getTypeOptions(){
+    public ResponseEntity<List<TypeOptionDto>> getTypeOptions(){
         return ResponseEntity.ok(service.getTypeOptions());
     }
 
     @GetMapping("{idOption}/{idTypeOption}")
-    public ResponseEntity getTypeOptionsById(@PathVariable("idOption")Integer idOption,
+    public ResponseEntity<TypeOptionDto> getTypeOptionsById(@PathVariable("idOption")Integer idOption,
                                              @PathVariable("idTypeOption")Integer idTypeOption){
         return ResponseEntity.ok(service.getById(idOption,idTypeOption));
     }
 
     @PostMapping("")
-    public ResponseEntity insert(@RequestBody TypeOptionDto typeOptionDto){
+    public ResponseEntity<TypeOptionDto> insert(@RequestBody TypeOptionDto typeOptionDto){
         return ResponseEntity.ok(service.insert(typeOptionDto));
     }
 
     @PutMapping("{idOption}/{idTypeOption}")
-    public ResponseEntity update(@PathVariable("idOption")Integer idOption,
+    public ResponseEntity<TypeOptionDto> update(@PathVariable("idOption")Integer idOption,
                                  @PathVariable("idTypeOption")Integer idTypeOption,
                                  @RequestBody TypeOptionDto typeOptionDto){
         return ResponseEntity.ok(service.update(idOption,idTypeOption,typeOptionDto));
     }
 
     @DeleteMapping("{idOption}/{idTypeOption}")
-    public ResponseEntity deleteById(@PathVariable("idOption")Integer idOption,
+    public ResponseEntity<Void> deleteById(@PathVariable("idOption")Integer idOption,
                                      @PathVariable("idTypeOption")Integer idTypeOption){
 
         try {

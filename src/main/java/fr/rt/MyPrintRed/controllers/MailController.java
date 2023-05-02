@@ -29,7 +29,7 @@ public class MailController {
     @ApiResponse(responseCode = "400", description = "La syntaxe ou le contenu est invalide.")
     @ApiResponse(responseCode = "401", description = "Vous n'avez pas l'autorisation.")
     @ApiResponse(responseCode = "500", description = "Erreur serveur, veuillez réessayer plus tard.")
-    public ResponseEntity emailSending(@RequestBody EmailMessage emailMessage) {
+    public ResponseEntity<String> emailSending(@RequestBody EmailMessage emailMessage) {
 
         this.emailSenderRepository.sendEmail(emailMessage.getTo(), emailMessage.getEmail(),emailMessage.getSubject());
         return ResponseEntity.ok("Vous avez envoyez un email à : " + emailMessage.getTo());
