@@ -32,3 +32,14 @@ spring:
         max-request-size: 10MB
 springdoc:
   default-produces-media-type: application/json
+
+server:
+  port: 9090
+
+braintree:
+  merchant-id: 3fw8jj3xr2wj6cxz
+  public-key: 2kjpzbj9jywchn5n
+  private-key: 2ae35fe1749f5d666739f2c12217583d
+
+
+

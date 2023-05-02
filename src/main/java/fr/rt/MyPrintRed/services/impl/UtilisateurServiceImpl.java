@@ -35,17 +35,14 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
     private final UtilisateurRepository utilisateurRepository;
 
+    private final Validator validator;
 
-    @Autowired
-    private Validator validator;
-    @Autowired
-    private ObjectsValidator validate;
-    @Autowired
-    private EmailSendService emailSendService;
-    @Autowired
-    private PasswordTokenService passwordTokenService;
+    private final ObjectsValidator validate;
 
-    @Autowired
+    private final EmailSendService emailSendService;
+
+    private final PasswordTokenService passwordTokenService;
+
     private final UtilisateurMapper utilisateurMapper;
 
     private final PasswordEncoder passwordEncoder;

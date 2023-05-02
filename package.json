@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "engine.io": "^6.4.1",
     "maildev": "^2.0.5"
   }
 }

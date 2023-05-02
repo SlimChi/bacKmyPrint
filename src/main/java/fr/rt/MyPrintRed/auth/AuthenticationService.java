@@ -35,8 +35,8 @@ public class AuthenticationService {
     private final EmailSendService emailSendService;
     private final ConfirmationTokenService confirmationTokenService;
     private final UtilisateurServiceImpl utilisateurService;
-    @Autowired
-    private ObjectsValidator<RegisterRequest> validate;
+
+    private final ObjectsValidator<RegisterRequest> validate;
     private final AuthenticationManager authenticationManager;
 
 
