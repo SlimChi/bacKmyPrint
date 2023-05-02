@@ -5,7 +5,6 @@ import fr.rt.MyPrintRed.dto.OptionCategorieDto;
 import fr.rt.MyPrintRed.dto.TypeOptionDto;
 import fr.rt.MyPrintRed.entities.OptionCategorie;
 import fr.rt.MyPrintRed.entities.OptionCategoriePK;
-import fr.rt.MyPrintRed.entities.TypeOption;
 import fr.rt.MyPrintRed.mapper.OptionCategorieMapper;
 import fr.rt.MyPrintRed.mapper.TypeOptionMapper;
 import lombok.RequiredArgsConstructor;

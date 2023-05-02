@@ -11,7 +11,8 @@ import java.util.List;
  * @author slim
  * @Project
  */
-@Mapper(componentModel = "spring",nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+@Mapper(componentModel = "spring",nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+        uses = {TypeAdresseMapper.class})
 public interface AdresseMapper {
 
     AdresseDto toDto(Adresse adresse);

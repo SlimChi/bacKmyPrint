@@ -24,6 +24,6 @@ public class OptionLigneCommandePK implements Serializable {
             @JoinColumn(name = "id_option"),
             @JoinColumn(name = "id_type_option")
     })
-    private transient TypeOption typeOption;
+    private  TypeOption typeOption;
 
 }
