@@ -57,7 +57,6 @@ public class AuthenticationController {
         return accountResponse;
     }
 
-
     @PostMapping("/resetPassword/{token}")
     public AccountResponse resetPassword(@RequestBody NewPassword newPassword, @PathVariable String token) {
         return utilisateurService.resetPassword(newPassword, token);

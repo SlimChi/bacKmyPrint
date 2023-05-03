@@ -10,25 +10,26 @@ spring:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   mail:
-    host: smtp.gmail.com
-    port: 587
-    username: testmailcoolspring@gmail.com
-    password: kqpavmrvbdirizuy
+    host: localhost
+    port: 1025
+    username: hello
+    password: hello
 
     properties:
       mail:
         smtp:
+          ssl:
+            trust: "*"
           auth: true
-          debug: true
-          transport:
-            protocol: smtp
           starttls:
             enable: true
-
-    servlet:
-      multipart:
-        max-file-size: 10MB
-        max-request-size: 10MB
+          connectiontimeout: 5000
+          timeout: 3000
+          writetimeout: 5000
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 springdoc:
   default-produces-media-type: application/json
 
@@ -39,6 +40,5 @@ braintree:
   merchant-id: 3fw8jj3xr2wj6cxz
   public-key: 2kjpzbj9jywchn5n
   private-key: 2ae35fe1749f5d666739f2c12217583d
-
 
 
