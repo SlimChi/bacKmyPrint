@@ -1,4 +1,4 @@
-package fr.rt.MyPrintRed.services.brainTreePaiment.config;
+package fr.rt.MyPrintRed.config;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

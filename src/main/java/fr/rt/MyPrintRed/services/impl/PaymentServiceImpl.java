@@ -1,21 +1,21 @@
-package fr.rt.MyPrintRed.services.brainTreePaiment.service;
+package fr.rt.MyPrintRed.services.impl;
 
 import com.braintreegateway.*;
-import fr.rt.MyPrintRed.services.brainTreePaiment.clientTokenDto.ClientTokenDto;
-import fr.rt.MyPrintRed.services.brainTreePaiment.clientTokenDto.PurchaseDto;
-import fr.rt.MyPrintRed.services.brainTreePaiment.config.BrainTreeConfig;
+import fr.rt.MyPrintRed.dto.ClientTokenDto;
+import fr.rt.MyPrintRed.dto.PurchaseDto;
+import fr.rt.MyPrintRed.config.BrainTreeConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class PaymentService {
+public class PaymentServiceImpl {
 
     private final BrainTreeConfig config;
 
     @Autowired
-    public PaymentService(BrainTreeConfig config) {
+    public PaymentServiceImpl(BrainTreeConfig config) {
         this.config = config;
     }
 

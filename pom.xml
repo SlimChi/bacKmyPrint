@@ -12,7 +12,7 @@
 	<artifactId>MyPrintRed</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>MyPrintRed</name>
-	<description>Backend de l&apos;application MyPrint by Red</description>
+	<description>application MyPrint</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -120,11 +120,6 @@
 			<artifactId>jjwt-jackson</artifactId>
 			<version>0.11.5</version>
 			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.iban4j</groupId>
-			<artifactId>iban4j</artifactId>
-			<version>3.2.3-RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mapstruct</groupId>

@@ -1,5 +1,6 @@
-package fr.rt.MyPrintRed.services.password;
+package fr.rt.MyPrintRed.repositories;
 
+import fr.rt.MyPrintRed.entities.PasswordToken;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

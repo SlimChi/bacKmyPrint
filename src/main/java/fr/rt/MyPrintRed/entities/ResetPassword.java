@@ -1,4 +1,4 @@
-package fr.rt.MyPrintRed.services.password;
+package fr.rt.MyPrintRed.entities;
 
 import jakarta.validation.constraints.Email;
 import lombok.Getter;

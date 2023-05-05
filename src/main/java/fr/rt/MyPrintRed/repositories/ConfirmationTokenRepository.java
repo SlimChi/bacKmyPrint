@@ -1,6 +1,7 @@
-package fr.rt.MyPrintRed.services.token;
+package fr.rt.MyPrintRed.repositories;
 
 
+import fr.rt.MyPrintRed.entities.ConfirmationToken;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

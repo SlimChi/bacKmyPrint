@@ -1,5 +1,7 @@
-package fr.rt.MyPrintRed.services.password;
+package fr.rt.MyPrintRed.services.impl;
 
+import fr.rt.MyPrintRed.repositories.PasswordTokenRepository;
+import fr.rt.MyPrintRed.entities.PasswordToken;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +13,7 @@ import java.util.Optional;
  */
 @Service
 @AllArgsConstructor
-public class PasswordTokenService {
+public class PasswordTokenServiceImpl {
 
     private final PasswordTokenRepository passwordTokenRepository;
 

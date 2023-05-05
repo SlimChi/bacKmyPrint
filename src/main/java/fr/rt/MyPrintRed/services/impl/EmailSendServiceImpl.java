@@ -1,4 +1,4 @@
-package fr.rt.MyPrintRed.services.emailService;
+package fr.rt.MyPrintRed.services.impl;
 
 
 import fr.rt.MyPrintRed.repositories.EmailSenderRepository;
@@ -17,13 +17,13 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-public class EmailSendService implements EmailSenderRepository {
+public class EmailSendServiceImpl implements EmailSenderRepository {
 
     public final static Logger LOGGER = LoggerFactory
-            .getLogger(EmailSendService.class);
+            .getLogger(EmailSendServiceImpl.class);
     private final JavaMailSender javaMailSender;
 
-    public EmailSendService(JavaMailSender javaMailSender) {
+    public EmailSendServiceImpl(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
     }
 

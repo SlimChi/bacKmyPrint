@@ -19,4 +19,5 @@ public interface LigneCommandeRepository extends JpaRepository<LigneCommande, Li
 
     @Query(value = "select lc from LigneCommande lc where lc.ligneCommandePK.numeroCommande = :#{#numeroCommande}")
     List<LigneCommande> getAllByNumeroCommande(@Param("numeroCommande") Integer numeroCommande);
+
 }

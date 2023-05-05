@@ -1,8 +1,10 @@
-package fr.rt.MyPrintRed.services.brainTreePaiment.clientTokenDto;
+package fr.rt.MyPrintRed.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
 
 /**
  * @author slimane
@@ -11,7 +13,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class ClientTokenDto {
+public class PurchaseDto {
+    private String nonce;
+    private BigDecimal amount;
 
-    private  String token;
 }

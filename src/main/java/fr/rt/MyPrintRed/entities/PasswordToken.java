@@ -1,4 +1,4 @@
-package fr.rt.MyPrintRed.services.password;
+package fr.rt.MyPrintRed.entities;
 
 import fr.rt.MyPrintRed.entities.Utilisateur;
 import jakarta.persistence.*;

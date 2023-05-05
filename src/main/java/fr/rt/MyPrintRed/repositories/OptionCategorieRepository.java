@@ -12,6 +12,7 @@ import java.util.List;
 
 @Repository
 public interface OptionCategorieRepository extends JpaRepository<OptionCategorie, OptionCategoriePK> {
+
     @Query(value = "select oc from OptionCategorie oc where oc.optionCategoriePK.idCategorie = :#{#idCategorie} ")
     List<OptionCategorie> getAllByIdCategorie(@Param("idCategorie")Integer idCategorie);
 

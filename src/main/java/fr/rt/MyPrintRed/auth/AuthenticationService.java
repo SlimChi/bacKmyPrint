@@ -4,14 +4,14 @@ import fr.rt.MyPrintRed.config.JwtService;
 import fr.rt.MyPrintRed.entities.Role;
 import fr.rt.MyPrintRed.entities.Utilisateur;
 import fr.rt.MyPrintRed.repositories.UtilisateurRepository;
-import fr.rt.MyPrintRed.services.emailService.EmailSendService;
+import fr.rt.MyPrintRed.services.impl.EmailSendServiceImpl;
 import fr.rt.MyPrintRed.services.impl.UtilisateurServiceImpl;
-import fr.rt.MyPrintRed.services.token.ConfirmationToken;
-import fr.rt.MyPrintRed.services.token.ConfirmationTokenService;
+
+import fr.rt.MyPrintRed.services.impl.ConfirmationTokenServiceImpl;
+import fr.rt.MyPrintRed.entities.ConfirmationToken;
 import fr.rt.MyPrintRed.validators.ObjectsValidator;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,8 +32,8 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final ObjectsValidator validator;
     private final JwtService jwtService;
-    private final EmailSendService emailSendService;
-    private final ConfirmationTokenService confirmationTokenService;
+    private final EmailSendServiceImpl emailSendService;
+    private final ConfirmationTokenServiceImpl confirmationTokenService;
     private final UtilisateurServiceImpl utilisateurService;
 
     private final ObjectsValidator<RegisterRequest> validate;

@@ -11,16 +11,13 @@ import fr.rt.MyPrintRed.repositories.AdresseRepository;
 import fr.rt.MyPrintRed.repositories.UtilisateurRepository;
 import fr.rt.MyPrintRed.request.AccountResponse;
 import fr.rt.MyPrintRed.services.UtilisateurService;
-import fr.rt.MyPrintRed.services.emailService.EmailSendService;
-import fr.rt.MyPrintRed.services.password.NewPassword;
-import fr.rt.MyPrintRed.services.password.PasswordToken;
-import fr.rt.MyPrintRed.services.password.PasswordTokenService;
-import fr.rt.MyPrintRed.services.password.ResetPassword;
+import fr.rt.MyPrintRed.entities.NewPassword;
+import fr.rt.MyPrintRed.entities.PasswordToken;
+import fr.rt.MyPrintRed.entities.ResetPassword;
 import fr.rt.MyPrintRed.validators.ObjectsValidator;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,9 +36,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
     private final ObjectsValidator validate;
 
-    private final EmailSendService emailSendService;
+    private final EmailSendServiceImpl emailSendService;
 
-    private final PasswordTokenService passwordTokenService;
+    private final PasswordTokenServiceImpl passwordTokenService;
 
     private final UtilisateurMapper utilisateurMapper;
 
@@ -61,12 +58,15 @@ public class UtilisateurServiceImpl implements UtilisateurService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public UtilisateurDto getUtilisateurById(Integer idUtilisateur) {
+    public UtilisateurDto getUtilisateurById(Integer idUtilisateur) throws UserNotFoundException {
 
         Optional<Utilisateur> utilisateur = utilisateurRepository.findById(idUtilisateur);
 
-        return utilisateurMapper.toDto(utilisateur.orElseThrow(()-> new UserNotFoundException(idUtilisateur)));
+        if(utilisateur.isPresent()) {
+            return utilisateurMapper.toDto(utilisateur.get());
+        } else {
+            throw new UserNotFoundException(idUtilisateur);
+        }
     }
 
     @Override

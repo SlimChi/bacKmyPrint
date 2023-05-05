@@ -1,5 +1,7 @@
-package fr.rt.MyPrintRed.services.token;
+package fr.rt.MyPrintRed.services.impl;
 
+import fr.rt.MyPrintRed.repositories.ConfirmationTokenRepository;
+import fr.rt.MyPrintRed.entities.ConfirmationToken;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +14,7 @@ import java.util.Optional;
  */
 @Service
 @AllArgsConstructor
-public class ConfirmationTokenService {
+public class ConfirmationTokenServiceImpl {
 
     private final ConfirmationTokenRepository confirmationTokenRepository;
 

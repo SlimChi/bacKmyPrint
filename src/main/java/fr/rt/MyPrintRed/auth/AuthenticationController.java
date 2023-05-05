@@ -2,8 +2,8 @@ package fr.rt.MyPrintRed.auth;
 
 import fr.rt.MyPrintRed.request.AccountResponse;
 import fr.rt.MyPrintRed.services.UtilisateurService;
-import fr.rt.MyPrintRed.services.password.NewPassword;
-import fr.rt.MyPrintRed.services.password.ResetPassword;
+import fr.rt.MyPrintRed.entities.NewPassword;
+import fr.rt.MyPrintRed.entities.ResetPassword;
 import fr.rt.MyPrintRed.validators.ObjectsValidator;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
