@@ -20,7 +20,7 @@ import static fr.rt.MyPrintRed.controllers.BaseUrl.FRONT_BASE_URL;
 public class OptionCategorieController {
 
     private final OptionCategorieService service;
-    //vite fait
+
     @GetMapping("")
     public ResponseEntity<List<OptionCategorieDto>> getOptionsCategories(){
         return ResponseEntity.ok(service.getAll());
