@@ -19,7 +19,7 @@ import java.util.List;
 public class AdresseController {
 
     private final AdresseService service;
-
+    //vite fait
     @PostMapping("/")
     public ResponseEntity<Integer> save(
             @RequestBody AdresseDto addressDto

@@ -45,7 +45,7 @@ public class CommandeServiceImpl implements CommandeService {
     public CommandeDto getById(Integer numeroCommande) {
         return commandeMapper.toDto(commandeRepository.findById(numeroCommande).orElseThrow(()->new CommandeNotFoundException(numeroCommande)));
     }
-
+//vite fait
     @Override
     public List<CommandeDto> getAllByIdUtilisateur(Integer idUtilisateur) {
         return commandeMapper.toDtoList(commandeRepository.getCommandesByIdUtilisateur(idUtilisateur));
