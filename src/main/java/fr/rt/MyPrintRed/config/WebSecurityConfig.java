@@ -28,16 +28,15 @@ public class WebSecurityConfig {
             "/swagger-ui.html",
             "/mail/**",
             "/api/**",
-            "/checkEmail/**",
             "/resetPassword/{token}/**",
-            "/auth/**"
+            "/auth/**",
 
     };
     private static final String[] SECURED_URL_ADMIN={
             "intervenirs/**",
             "options/**",
             "typeoptions/**",
-            "categories/**",
+            "categories/**"
 
     };
     private static final String[] SECURED_URL_STAFF={

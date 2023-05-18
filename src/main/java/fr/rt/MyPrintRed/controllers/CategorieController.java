@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static fr.rt.MyPrintRed.controllers.BaseUrl.FRONT_BASE_URL;
 
 @RestController
@@ -21,32 +23,32 @@ public class CategorieController {
 
 
     @GetMapping("")
-    public ResponseEntity getCategories(){
+    public ResponseEntity<List<CategorieDto>> getCategories(){
         return ResponseEntity.ok(categorieService.getCategories());
     }
 
     @GetMapping("{idCategorie}")
-    public ResponseEntity getCategorieById(@PathVariable("idCategorie")Integer idCategorie){
+    public ResponseEntity<CategorieDto> getCategorieById(@PathVariable("idCategorie")Integer idCategorie){
 
         return ResponseEntity.ok(categorieService.getById(idCategorie));
 
     }
     @PostMapping("")
-    public ResponseEntity insertCategorie(@RequestBody CategorieDto categorieDto){
+    public ResponseEntity<CategorieDto> insertCategorie(@RequestBody CategorieDto categorieDto){
 
         return ResponseEntity.ok(categorieService.insert(categorieDto));
     }
 
 
     @PutMapping("{idCategorie}")
-    public ResponseEntity updateCategorie(@PathVariable("idCategorie")Integer idCategorie,
+    public ResponseEntity<CategorieDto> updateCategorie(@PathVariable("idCategorie")Integer idCategorie,
                                           @RequestBody CategorieDto categorieDto){
 
         return ResponseEntity.ok(categorieService.update(idCategorie,categorieDto));
     }
 
     @DeleteMapping("{idCategorie}")
-    public ResponseEntity deleteMapping(@PathVariable("idCategorie")Integer idCategorie){
+    public ResponseEntity<Void> deleteMapping(@PathVariable("idCategorie")Integer idCategorie){
 
         try{
             categorieService.deleteById(idCategorie);

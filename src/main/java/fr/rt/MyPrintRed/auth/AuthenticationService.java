@@ -4,14 +4,14 @@ import fr.rt.MyPrintRed.config.JwtService;
 import fr.rt.MyPrintRed.entities.Role;
 import fr.rt.MyPrintRed.entities.Utilisateur;
 import fr.rt.MyPrintRed.repositories.UtilisateurRepository;
-import fr.rt.MyPrintRed.services.emailService.EmailSendService;
+import fr.rt.MyPrintRed.services.impl.EmailSendServiceImpl;
 import fr.rt.MyPrintRed.services.impl.UtilisateurServiceImpl;
-import fr.rt.MyPrintRed.services.token.ConfirmationToken;
-import fr.rt.MyPrintRed.services.token.ConfirmationTokenService;
+
+import fr.rt.MyPrintRed.services.impl.ConfirmationTokenServiceImpl;
+import fr.rt.MyPrintRed.entities.ConfirmationToken;
 import fr.rt.MyPrintRed.validators.ObjectsValidator;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,11 +32,11 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final ObjectsValidator validator;
     private final JwtService jwtService;
-    private final EmailSendService emailSendService;
-    private final ConfirmationTokenService confirmationTokenService;
+    private final EmailSendServiceImpl emailSendService;
+    private final ConfirmationTokenServiceImpl confirmationTokenService;
     private final UtilisateurServiceImpl utilisateurService;
-    @Autowired
-    private ObjectsValidator<RegisterRequest> validate;
+
+    private final ObjectsValidator<RegisterRequest> validate;
     private final AuthenticationManager authenticationManager;
 
 
@@ -166,10 +166,10 @@ public class AuthenticationService {
                 "                  <td align=\"center\" valign=\"top\" style=\"padding:0;Margin:0;width:470px\">\n" +
                 "                   <table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" role=\"presentation\" style=\"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px\">\n" +
                 "                     <tbody><tr>\n" +
-                "                      <td align=\"center\" style=\"padding:0;Margin:0\"><h1 style=\"Margin:0;line-height:46px;mso-line-height-rule:exactly;font-family:Poppins, sans-serif;font-size:38px;font-style:normal;font-weight:bold;color:#5d541d\">Please confirm<br>your email address</h1></td>\n" +
+                "                      <td align=\"center\" style=\"padding:0;Margin:0\"><h1 style=\"Margin:0;line-height:46px;mso-line-height-rule:exactly;font-family:Poppins, sans-serif;font-size:38px;font-style:normal;font-weight:bold;color:#5d541d\">Veuillez confirmer<br> votre adresse e-mail</h1></td>\n" +
                 "                     </tr>\n" +
                 "                     <tr>\n" +
-                "                      <td align=\"center\" style=\"padding:0;Margin:0;padding-top:40px;padding-bottom:40px\"><h3 style=\"Margin:0;line-height:24px;mso-line-height-rule:exactly;font-family:Poppins, sans-serif;font-size:20px;font-style:normal;font-weight:bold;color:#5D541D\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hi \"" + name + "\",</p>Thanks for joining myPrint!</h3><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:Poppins, sans-serif;line-height:27px;color:#5D541D;font-size:18px\"><br></p><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:Poppins, sans-serif;line-height:27px;color:#5D541D;font-size:18px\">To finish signing up, please confirm your email address. This ensures we have the right email in case we need to contact you.</p></td>\n" +
+                "                      <td align=\"center\" style=\"padding:0;Margin:0;padding-top:40px;padding-bottom:40px\"><h3 style=\"Margin:0;line-height:24px;mso-line-height-rule:exactly;font-family:Poppins, sans-serif;font-size:20px;font-style:normal;font-weight:bold;color:#5D541D\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Salut \"" + name + "\",</p>Merci d'avoir rejoint myPrint! \n</h3><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:Poppins, sans-serif;line-height:27px;color:#5D541D;font-size:18px\"><br></p><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:Poppins, sans-serif;line-height:27px;color:#5D541D;font-size:18px\">Pour terminer votre inscription, veuillez confirmer votre adresse e-mail. Cela garantit que nous avons le bon e-mail au cas où nous aurions besoin de vous contacter. </p></td>\n" +
 
                 "                     </tr>\n" +
                 "                     <tr>\n" +
@@ -177,7 +177,7 @@ public class AuthenticationService {
                 "\t<v:roundrect xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w=\"urn:schemas-microsoft-com:office:word\" esdevVmlButton href=\"https://viewstripo.email\" \n" +
                 "                style=\"height:49px; v-text-anchor:middle; width:254px\" arcsize=\"50%\" stroke=\"f\"  fillcolor=\"#8928c6\">\n" +
                 "\t\t<w:anchorlock></w:anchorlock>\n" +
-                "\t\t<center style='color:#ffffff; font-family:Poppins, sans-serif; font-size:16px; font-weight:400; line-height:16px;  mso-text-raise:1px'>Confirm email address</center>\n" +
+                "\t\t<center style='color:#ffffff; font-family:Poppins, sans-serif; font-size:16px; font-weight:400; line-height:16px;  mso-text-raise:1px'>Confirmer l'adresse e-mail \n</center>\n" +
                 "\t</v:roundrect></a>\n" +
                 "<![endif]--><!--[if !mso]><!-- --><span class=\"msohide es-button-border\" style=\"border-style:solid;border-color:#2CB543;background:#8928c6;border-width:0px;display:inline-block;border-radius:30px;width:auto;mso-hide:all\"><a href=\"" + link + "\" class=\"es-button\" target=\"_blank\" style=\"mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#FFFFFF;font-size:16px;padding:15px 35px 15px 35px;display:inline-block;background:#8928c6;border-radius:30px;font-family:Poppins, sans-serif;font-weight:normal;font-style:normal;line-height:19px;width:auto;text-align:center;border-color:#8928c6\">Confirm email address</a></span><!--<![endif]--></td>\n" +
                 "                     </tr>\n" +
@@ -192,7 +192,7 @@ public class AuthenticationService {
                 "                  <td align=\"left\" style=\"padding:0;Margin:0;width:470px\">\n" +
                 "                   <table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" role=\"presentation\" style=\"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px\">\n" +
                 "                     <tbody><tr>\n" +
-                "                      <td align=\"center\" style=\"padding:0;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:Poppins, sans-serif;line-height:21px;color:#5D541D;font-size:14px\">Thanks,<br>MyPrint Team!&nbsp;</p></td>\n" +
+                "                      <td align=\"center\" style=\"padding:0;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:Poppins, sans-serif;line-height:21px;color:#5D541D;font-size:14px\"><br> L'équipe MyPrint!;</p></td>\n" +
                 "                     </tr>\n" +
                 "                   </tbody></table></td>\n" +
                 "                 </tr>\n" +

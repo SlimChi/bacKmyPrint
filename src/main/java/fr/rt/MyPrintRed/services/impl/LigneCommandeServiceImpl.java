@@ -23,7 +23,7 @@ import java.util.Optional;
 @Transactional
 public class LigneCommandeServiceImpl implements LigneCommandeService {
 
-    private final LigneCommandeRepository repository;
+    private final LigneCommandeRepository ligneCommandeRepository;
 
     private final LigneCommandeMapper mapper;
 
@@ -31,24 +31,24 @@ public class LigneCommandeServiceImpl implements LigneCommandeService {
 
     @Override
     public List<LigneCommandeDto> getAll() {
-        return mapper.toDtoList(repository.findAll());
+        return mapper.toDtoList(ligneCommandeRepository.findAll());
     }
 
     @Override
     public List<LigneCommandeDto> getAllByNumeroCommande(Integer numeroCommande) {
-        return mapper.toDtoList(repository.getAllByNumeroCommande(numeroCommande));
+        return mapper.toDtoList(ligneCommandeRepository.getAllByNumeroCommande(numeroCommande));
     }
 
     @Override
     public LigneCommandeDto getAllByNumeros(Integer numeroCommande, Integer numeroLigneCommande) {
-        return mapper.toDto(repository.findById(new LigneCommandePK(numeroCommande,numeroLigneCommande))
+        return mapper.toDto(ligneCommandeRepository.findById(new LigneCommandePK(numeroCommande,numeroLigneCommande))
                 .orElseThrow(()-> new LigneCommandeNotFoundException(numeroCommande,numeroLigneCommande)));
     }
 
     @Override
     public LigneCommandeDto insert(InsertLigneCommandeDto insertDto) {
 
-        Optional<Integer> index = repository.getMaxId(insertDto.getNumeroCommande());
+        Optional<Integer> index = ligneCommandeRepository.getMaxId(insertDto.getNumeroCommande());
         LigneCommande ligneCommande = mapper.toEntity(insertDto);
 
         if(index.isPresent())
@@ -57,7 +57,7 @@ public class LigneCommandeServiceImpl implements LigneCommandeService {
             ligneCommande.getLigneCommandePK().setNumeroLigneCommande(1);
 
 
-        return mapper.toDto(repository.save(ligneCommande));
+        return mapper.toDto(ligneCommandeRepository.save(ligneCommande));
 
     }
 
@@ -70,6 +70,6 @@ public class LigneCommandeServiceImpl implements LigneCommandeService {
         ligneCommande.setStatus(status);
 
 
-        return mapper.toDto(repository.save(ligneCommande));
+        return mapper.toDto(ligneCommandeRepository.save(ligneCommande));
     }
 }

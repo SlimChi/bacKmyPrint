@@ -16,6 +16,7 @@ public class InsertLigneCommandeDto {
 
     private Integer numeroCommande;
     private Boolean rectoVerso;
+    private String format;
     private Boolean couleur;
     private Integer nombreExemplaire;
 

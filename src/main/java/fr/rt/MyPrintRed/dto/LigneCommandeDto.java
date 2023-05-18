@@ -15,9 +15,12 @@ import java.math.BigDecimal;
 public class LigneCommandeDto {
 
     private Integer numeroCommande;
+
     private Integer numeroLigneCommande;
 
     private Boolean rectoVerso;
+
+    private String format;
 
     private Boolean couleur;
 

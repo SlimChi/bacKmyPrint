@@ -3,6 +3,7 @@ package fr.rt.MyPrintRed.mapper.impl;
 import fr.rt.MyPrintRed.dto.AdresseDto;
 import fr.rt.MyPrintRed.entities.Adresse;
 import fr.rt.MyPrintRed.mapper.AdresseMapper;
+import fr.rt.MyPrintRed.mapper.TypeAdresseMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,14 +19,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdresseMapperImpl implements AdresseMapper {
 
+    private final TypeAdresseMapper typeAdresseMapper;
+
     @Override
     public AdresseDto toDto(Adresse adresse) {
         return new AdresseDto(
                 adresse.getId(),
                 adresse.getRue(),
                 adresse.getComplement(),
+                adresse.getVille(),
                 adresse.getCodePostal(),
-                adresse.getVille()
+                typeAdresseMapper.toDto(adresse.getTypeAdresse()),
+                adresse.getIdUtilisateur()
 
         );
     }
@@ -37,7 +42,9 @@ public class AdresseMapperImpl implements AdresseMapper {
                 adresseDto.getRue(),
                 adresseDto.getComplement(),
                 adresseDto.getCodePostal(),
-                adresseDto.getVille()
+                adresseDto.getVille(),
+                typeAdresseMapper.toEntity(adresseDto.getTypeAdresseDto()),
+                adresseDto.getUtilisateurId()
 
         );
     }

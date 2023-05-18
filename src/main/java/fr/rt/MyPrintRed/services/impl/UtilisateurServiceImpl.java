@@ -11,16 +11,13 @@ import fr.rt.MyPrintRed.repositories.AdresseRepository;
 import fr.rt.MyPrintRed.repositories.UtilisateurRepository;
 import fr.rt.MyPrintRed.request.AccountResponse;
 import fr.rt.MyPrintRed.services.UtilisateurService;
-import fr.rt.MyPrintRed.services.emailService.EmailSendService;
-import fr.rt.MyPrintRed.services.password.NewPassword;
-import fr.rt.MyPrintRed.services.password.PasswordToken;
-import fr.rt.MyPrintRed.services.password.PasswordTokenService;
-import fr.rt.MyPrintRed.services.password.ResetPassword;
+import fr.rt.MyPrintRed.entities.NewPassword;
+import fr.rt.MyPrintRed.entities.PasswordToken;
+import fr.rt.MyPrintRed.entities.ResetPassword;
 import fr.rt.MyPrintRed.validators.ObjectsValidator;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,17 +32,14 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
     private final UtilisateurRepository utilisateurRepository;
 
+    private final Validator validator;
 
-    @Autowired
-    private Validator validator;
-    @Autowired
-    private ObjectsValidator validate;
-    @Autowired
-    private EmailSendService emailSendService;
-    @Autowired
-    private PasswordTokenService passwordTokenService;
+    private final ObjectsValidator validate;
 
-    @Autowired
+    private final EmailSendServiceImpl emailSendService;
+
+    private final PasswordTokenServiceImpl passwordTokenService;
+
     private final UtilisateurMapper utilisateurMapper;
 
     private final PasswordEncoder passwordEncoder;
@@ -64,12 +58,15 @@ public class UtilisateurServiceImpl implements UtilisateurService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public UtilisateurDto getUtilisateurById(Integer idUtilisateur) {
+    public UtilisateurDto getUtilisateurById(Integer idUtilisateur) throws UserNotFoundException {
 
         Optional<Utilisateur> utilisateur = utilisateurRepository.findById(idUtilisateur);
 
-        return utilisateurMapper.toDto(utilisateur.orElseThrow(()-> new UserNotFoundException(idUtilisateur)));
+        if(utilisateur.isPresent()) {
+            return utilisateurMapper.toDto(utilisateur.get());
+        } else {
+            throw new UserNotFoundException(idUtilisateur);
+        }
     }
 
     @Override
@@ -167,19 +164,19 @@ public class UtilisateurServiceImpl implements UtilisateurService {
                 "\t\t\t\t\t\t\t\t\t\t\t<!--[if mso]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 40px; padding-left: 40px; padding-top: 10px; padding-bottom: 10px; font-family: Arial, sans-serif\"><![endif]-->\n" +
                 "\t\t\t\t\t\t\t\t\t\t\t<div style=\"color:#555555;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;line-height:1.2;padding-top:10px;padding-right:40px;padding-bottom:10px;padding-left:40px;\">\n" +
                 "\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"txtTinyMce-wrapper\" style=\"line-height: 1.2; font-size: 12px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #555555; mso-line-height-alt: 14px;\">\n" +
-                "\t\t\t\t\t\t\t\t\t\t\t\t\t<p style=\"margin: 0; font-size: 30px; line-height: 1.2; text-align: center; word-break: break-word; mso-line-height-alt: 36px; margin-top: 0; margin-bottom: 0;\"><span style=\"font-size: 30px; color: #2b303a;\"><strong>Forgot Your Password?</strong></span></p>\n" +
+                "\t\t\t\t\t\t\t\t\t\t\t\t\t<p style=\"margin: 0; font-size: 30px; line-height: 1.2; text-align: center; word-break: break-word; mso-line-height-alt: 36px; margin-top: 0; margin-bottom: 0;\"><span style=\"font-size: 30px; color: #2b303a;\"><strong>Mot de passe oublié?</strong></span></p>\n" +
                 "\t\t\t\t\t\t\t\t\t\t\t\t</div>\n" +
                 "\t\t\t\t\t\t\t\t\t\t\t</div>\n" +
                 "\t\t\t\t\t\t\t\t\t\t\t<!--[if mso]></td></tr></table><![endif]-->\n" +
                 "\t\t\t\t\t\t\t\t\t\t\t<!--[if mso]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 40px; padding-left: 40px; padding-top: 10px; padding-bottom: 10px; font-family: Tahoma, sans-serif\"><![endif]-->\n" +
                 "\t\t\t\t\t\t\t\t\t\t\t<div style=\"color:#555555;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;line-height:1.5;padding-top:10px;padding-right:40px;padding-bottom:10px;padding-left:40px;\">\n" +
                 "\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"txtTinyMce-wrapper\" style=\"line-height: 1.5; font-size: 12px; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; color: #555555; mso-line-height-alt: 18px;\">\n" +
-                "\t\t\t\t\t\t\t\t\t\t\t\t\t<p style=\"margin: 0; font-size: 15px; line-height: 1.5; text-align: center; word-break: break-word; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; mso-line-height-alt: 23px; margin-top: 0; margin-bottom: 0;\"><span style=\"color: #808389; font-size: 15px;\">You recently requested to reset your password for your account. Use the button below to reset it. This password reset is only valid for the next 24 hours..</span></p>\n" +
+                "\t\t\t\t\t\t\t\t\t\t\t\t\t<p style=\"margin: 0; font-size: 15px; line-height: 1.5; text-align: center; word-break: break-word; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; mso-line-height-alt: 23px; margin-top: 0; margin-bottom: 0;\"><span style=\"color: #808389; font-size: 15px;\">Vous avez récemment demandé la réinitialisation du mot de passe de votre compte. Utilisez le bouton ci-dessous pour le réinitialiser. Cette réinitialisation de mot de passe n'est valable que pour les prochaines 24 heures..</span></p>\n" +
                 "\t\t\t\t\t\t\t\t\t\t\t\t</div>\n" +
                 "\t\t\t\t\t\t\t\t\t\t\t</div>\n" +
                 "\t\t\t\t\t\t\t\t\t\t\t<!--[if mso]></td></tr></table><![endif]-->\n" +
                 "\t\t\t\t\t\t\t\t\t\t\t<div class=\"button-container\" align=\"center\" style=\"padding-top:15px;padding-right:10px;padding-bottom:0px;padding-left:10px;\">\n" +
-                "\t\t\t\t\t\t\t\t\t\t\t\t<!--[if mso]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;\"><tr><td style=\"padding-top: 15px; padding-right: 10px; padding-bottom: 0px; padding-left: 10px\" align=\"center\"><v:roundrect xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w=\"urn:schemas-microsoft-com:office:word\"style=\"height:46.5pt;width:201.75pt;v-text-anchor:middle;\" arcsize=\"57%\" stroke=\"false\" fillcolor=\"#f7a50c\"><w:anchorlock/><v:textbox inset=\"0,0,0,0\"><center style=\"color:#ffffff; font-family:Arial, sans-serif; font-size:16px\"><![endif]--><a href=\""+ link +"\" target=\"_blank\" style=\"-webkit-text-size-adjust: none; text-decoration: none; display: inline-block; color: #ffffff; background-color: #f7a50c; border-radius: 35px; -webkit-border-radius: 35px; -moz-border-radius: 35px; width: auto; width: auto; border-top: 1px solid #f7a50c; border-right: 1px solid #f7a50c; border-bottom: 1px solid #f7a50c; border-left: 1px solid #f7a50c; padding-top: 15px; padding-bottom: 15px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; text-align: center; mso-border-alt: none; word-break: keep-all;\"><span style=\"padding-left:30px;padding-right:30px;font-size:16px;display:inline-block;letter-spacing:undefined;\"><span style=\"font-size: 16px; margin: 0; line-height: 2; word-break: break-word; mso-line-height-alt: 32px;\"><strong>RESET PASSWORD</strong></span></span></a>\n" +
+                "\t\t\t\t\t\t\t\t\t\t\t\t<!--[if mso]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;\"><tr><td style=\"padding-top: 15px; padding-right: 10px; padding-bottom: 0px; padding-left: 10px\" align=\"center\"><v:roundrect xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w=\"urn:schemas-microsoft-com:office:word\"style=\"height:46.5pt;width:201.75pt;v-text-anchor:middle;\" arcsize=\"57%\" stroke=\"false\" fillcolor=\"#f7a50c\"><w:anchorlock/><v:textbox inset=\"0,0,0,0\"><center style=\"color:#ffffff; font-family:Arial, sans-serif; font-size:16px\"><![endif]--><a href=\""+ link +"\" target=\"_blank\" style=\"-webkit-text-size-adjust: none; text-decoration: none; display: inline-block; color: #ffffff; background-color: #f7a50c; border-radius: 35px; -webkit-border-radius: 35px; -moz-border-radius: 35px; width: auto; width: auto; border-top: 1px solid #f7a50c; border-right: 1px solid #f7a50c; border-bottom: 1px solid #f7a50c; border-left: 1px solid #f7a50c; padding-top: 15px; padding-bottom: 15px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; text-align: center; mso-border-alt: none; word-break: keep-all;\"><span style=\"padding-left:30px;padding-right:30px;font-size:16px;display:inline-block;letter-spacing:undefined;\"><span style=\"font-size: 16px; margin: 0; line-height: 2; word-break: break-word; mso-line-height-alt: 32px;\"><strong>RÉINITIALISER LE MOT DE PASSE</strong></span></span></a>\n" +
                 "\t\t\t\t\t\t\t\t\t\t\t\t<!--[if mso]></center></v:textbox></v:roundrect></td></tr></table><![endif]-->\n" +
                 "\t\t\t\t\t\t\t\t\t\t\t</div>\n" +
                 "\t\t\t\t\t\t\t\t\t\t\t<table class=\"divider\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;\" role=\"presentation\" valign=\"top\">\n" +

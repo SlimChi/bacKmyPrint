@@ -22,27 +22,27 @@ public class OptionCategorieController {
     private final OptionCategorieService service;
 
     @GetMapping("")
-    public ResponseEntity getOptionsCategories(){
+    public ResponseEntity<List<OptionCategorieDto>> getOptionsCategories(){
         return ResponseEntity.ok(service.getAll());
     }
 
     @GetMapping("{idCategorie}")
-    public ResponseEntity getOptionsCategoriesByIdCategorie(@PathVariable("idCategorie")Integer idCategorie){
+    public ResponseEntity<List<OptionCategorieDto>> getOptionsCategoriesByIdCategorie(@PathVariable("idCategorie")Integer idCategorie){
         return ResponseEntity.ok(service.getAllByIdCategorie(idCategorie));
     }
 
     @PostMapping("")
-    public ResponseEntity insert(@RequestBody OptionCategorieDto optionCategorieDto){
+    public ResponseEntity<OptionCategorieDto> insert(@RequestBody OptionCategorieDto optionCategorieDto){
         return ResponseEntity.ok(service.insert(optionCategorieDto));
     }
 
     @DeleteMapping("")
-    public ResponseEntity delete(@RequestBody OptionCategorieDto optionCategorieDto){
+    public ResponseEntity<Void> delete(@RequestBody OptionCategorieDto optionCategorieDto){
         service.removeTypeOptionsFromCategorie(optionCategorieDto);
         return ResponseEntity.ok().build();
     }
     @PutMapping("{idCategorie}")
-    public ResponseEntity updateOptions(@PathVariable("idCategorie") Integer idCategorie,
+    public ResponseEntity<List<OptionCategorieDto>> updateOptions(@PathVariable("idCategorie") Integer idCategorie,
                                         @RequestBody List<TypeOptionDto> typeOptionDtos){
         return ResponseEntity.ok(service.updateOptions(idCategorie,typeOptionDtos));
     }

@@ -1,6 +1,7 @@
 package fr.rt.MyPrintRed.controllers;
 
 
+import fr.rt.MyPrintRed.dto.FichierDto;
 import fr.rt.MyPrintRed.dto.ResponseFile;
 import fr.rt.MyPrintRed.dto.ResponseMessage;
 import fr.rt.MyPrintRed.entities.Fichier;
@@ -29,7 +30,7 @@ public class FichierController {
 
     private final FichierService storageService;
 
-    @PostMapping("")
+    @PostMapping("/uploadFiles")
     public ResponseEntity<ResponseMessage> uploadFiles(@RequestParam("file") List<MultipartFile> files) {
         String message = "";
 
@@ -47,13 +48,26 @@ public class FichierController {
     }
 
 
+    @PostMapping("")
+    public ResponseEntity<Fichier> upload(@RequestParam("file") MultipartFile file){
+
+        try{
+
+            return ResponseEntity.ok(storageService.store(file));
+        }catch (Exception e){
+
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+        }
+    }
+
+
     @GetMapping("")
-    public ResponseEntity getFichiers(){
+    public ResponseEntity<List<FichierDto>> getFichiers(){
         return ResponseEntity.ok(storageService.getFichiers());
     }
 
     @GetMapping("{idFichier}")
-    public ResponseEntity getFichierById(@PathVariable("idFichier")Integer idFichier){
+    public ResponseEntity<FichierDto> getFichierById(@PathVariable("idFichier")Integer idFichier){
         return ResponseEntity.ok(storageService.getById(idFichier));
     }
 

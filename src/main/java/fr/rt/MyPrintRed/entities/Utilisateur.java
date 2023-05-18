@@ -42,11 +42,11 @@ public class Utilisateur implements UserDetails {
 
     @ManyToOne
     @JoinColumn(name = "id_role")
-    private Role role;
+    private  Role role;
 
     @OneToMany(fetch =FetchType.LAZY)
     @JoinColumn(name = "id_utilisateur")
-    private List<Adresse> adresse;
+    private  List<Adresse> adresse;
 
 
     private boolean active = false;

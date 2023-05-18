@@ -3,6 +3,7 @@ package fr.rt.MyPrintRed.services.impl;
 import fr.rt.MyPrintRed.dto.AdresseDto;
 import fr.rt.MyPrintRed.entities.Adresse;
 import fr.rt.MyPrintRed.entities.Utilisateur;
+import fr.rt.MyPrintRed.mapper.AdresseMapper;
 import fr.rt.MyPrintRed.repositories.AdresseRepository;
 import fr.rt.MyPrintRed.services.AdresseService;
 import jakarta.persistence.EntityNotFoundException;
@@ -23,35 +24,35 @@ public class AdresseSerImpl implements AdresseService {
 
     private final AdresseRepository adresseRepository;
 
+    private final AdresseMapper mapper;
+
 
     @Override
    public Integer save(AdresseDto dto) {
-        Adresse address = AdresseDto.toEntity(dto);
-    return adresseRepository.save(address).getId();
+       // Adresse address = AdresseDto.toEntity(dto);
+    return adresseRepository.save(mapper.toAdresse(dto)).getId();
     }
 
     @Override
     @Transactional
     public void addAdresseToUser(AdresseDto dto){
 
-        Adresse adresse = AdresseDto.toEntity(dto);
+       // Adresse adresse = AdresseDto.toEntity(dto);
 
-        adresseRepository.save(adresse).getIdUtilisateur();
+        adresseRepository.save(mapper.toAdresse(dto)).getIdUtilisateur();
     }
     @Transactional
     @Override
     public List<AdresseDto> findAll() {
-        return adresseRepository.findAll()
-                .stream()
-                .map(AdresseDto::fromEntity)
-                .collect(Collectors.toList());
+        return mapper.toListDto(adresseRepository.findAll());
+
     }
     @Transactional
     @Override
     public AdresseDto findById(Integer id) {
-        return adresseRepository.findById(id)
-                .map(AdresseDto::fromEntity)
-                .orElseThrow(() -> new EntityNotFoundException("No address found with the ID : " + id));
+
+        return mapper.toDto(adresseRepository.findById(id).orElseThrow(()->new EntityNotFoundException("No address found with the ID : " + id)));
+
     }
 
     @Override
@@ -73,7 +74,6 @@ public class AdresseSerImpl implements AdresseService {
 
     @Override
     public void delete(Integer id) {
-        // todo check delete
         adresseRepository.deleteById(id);
     }
 

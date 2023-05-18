@@ -23,23 +23,23 @@ public class OptionLigneCommandeController {
     private final OptionLigneCommandeService service;
 
     @GetMapping("")
-    public ResponseEntity getAll(){
+    public ResponseEntity<List<OptionLigneCommandeDto>> getAll(){
         return ResponseEntity.ok(service.getAll());
     }
 
     @GetMapping("{numeroCommande}/{numeroLigneCommande}")
-    public ResponseEntity getAllByNumeros(@PathVariable("numeroCommande") Integer numeroCommande,
+    public ResponseEntity<List<OptionLigneCommandeDto>> getAllByNumeros(@PathVariable("numeroCommande") Integer numeroCommande,
                                           @PathVariable("numeroLigneCommande")Integer numeroLigneCommande){
         return ResponseEntity.ok(service.getAllByNumeros(numeroCommande,numeroLigneCommande));
     }
 
     @PostMapping("")
-    public ResponseEntity insert(@RequestBody OptionLigneCommandeDto optionLigneCommandeDto){
+    public ResponseEntity<OptionLigneCommandeDto> insert(@RequestBody OptionLigneCommandeDto optionLigneCommandeDto){
         return ResponseEntity.ok(service.insert(optionLigneCommandeDto));
     }
 
     @DeleteMapping("")
-    public ResponseEntity delete(@RequestBody OptionLigneCommandeDto optionLigneCommandeDto){
+    public ResponseEntity<Void> delete(@RequestBody OptionLigneCommandeDto optionLigneCommandeDto){
         try{
             service.delete(optionLigneCommandeDto);
             return ResponseEntity.ok().build();
@@ -50,7 +50,7 @@ public class OptionLigneCommandeController {
 
 
     @PutMapping("{numeroCommande}/{numeroLigneCommande}")
-    public ResponseEntity updateTypeOptions(@PathVariable("numeroCommande") Integer numeroCommande,
+    public ResponseEntity<List<OptionLigneCommandeDto>> updateTypeOptions(@PathVariable("numeroCommande") Integer numeroCommande,
                                             @PathVariable("numeroLigneCommande")Integer numeroLigneCommande,
                                             @RequestBody List<TypeOptionDto> typeOptionDtos){
 

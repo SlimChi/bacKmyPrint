@@ -4,7 +4,6 @@ import fr.rt.MyPrintRed.dto.InsertIntervenirDto;
 import fr.rt.MyPrintRed.dto.IntervenirDto;
 import fr.rt.MyPrintRed.entities.Intervenir;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import java.util.List;

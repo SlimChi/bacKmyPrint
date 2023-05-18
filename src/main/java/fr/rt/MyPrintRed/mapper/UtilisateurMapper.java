@@ -3,7 +3,6 @@ package fr.rt.MyPrintRed.mapper;
 import fr.rt.MyPrintRed.dto.UtilisateurDto;
 import fr.rt.MyPrintRed.entities.Utilisateur;
 import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import java.util.List;

@@ -5,8 +5,8 @@ import fr.rt.MyPrintRed.dto.UtilisateurDto;
 import fr.rt.MyPrintRed.dto.InsertUtilisateurDto;
 import fr.rt.MyPrintRed.entities.Utilisateur;
 import fr.rt.MyPrintRed.request.AccountResponse;
-import fr.rt.MyPrintRed.services.password.NewPassword;
-import fr.rt.MyPrintRed.services.password.ResetPassword;
+import fr.rt.MyPrintRed.entities.NewPassword;
+import fr.rt.MyPrintRed.entities.ResetPassword;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

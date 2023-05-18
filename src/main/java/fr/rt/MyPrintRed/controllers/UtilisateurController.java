@@ -6,10 +6,7 @@ import fr.rt.MyPrintRed.dto.PasswordDto;
 import fr.rt.MyPrintRed.dto.UtilisateurDto;
 import fr.rt.MyPrintRed.dto.InsertUtilisateurDto;
 import fr.rt.MyPrintRed.services.impl.AdresseSerImpl;
-import fr.rt.MyPrintRed.request.AccountResponse;
 import fr.rt.MyPrintRed.services.UtilisateurService;
-import fr.rt.MyPrintRed.services.password.NewPassword;
-import fr.rt.MyPrintRed.services.password.ResetPassword;
 import fr.rt.MyPrintRed.validators.ObjectsValidator;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -50,7 +47,7 @@ public class UtilisateurController {
     }
 
     @GetMapping("{idUtilisateur}")
-    public ResponseEntity getUtilisateurById(HttpServletRequest request,@PathVariable("idUtilisateur") Integer idUtilisateur) {
+    public ResponseEntity<UtilisateurDto> getUtilisateurById(HttpServletRequest request,@PathVariable("idUtilisateur") Integer idUtilisateur) {
 
         String uriBase = request.getRequestURL().toString();
         try {
@@ -67,7 +64,7 @@ public class UtilisateurController {
     }
 
     @PutMapping("{idUtilisateur}/update")
-    public ResponseEntity updateUtilisateurById(@PathVariable("idUtilisateur") Integer idUtilisateur,
+    public ResponseEntity<UtilisateurDto> updateUtilisateurById(@PathVariable("idUtilisateur") Integer idUtilisateur,
                                                 @RequestBody InsertUtilisateurDto insertUtilisateurDto) {
 
 
@@ -77,7 +74,7 @@ public class UtilisateurController {
     }
 
     @PutMapping("{idUtilisateur}/updatepassword")
-    public ResponseEntity updatePasswordUtilisateurById(@PathVariable("idUtilisateur") Integer idUtilisateur,
+    public ResponseEntity<UtilisateurDto> updatePasswordUtilisateurById(@PathVariable("idUtilisateur") Integer idUtilisateur,
                                                 @RequestBody PasswordDto passwordDto) {
 
 
@@ -86,21 +83,9 @@ public class UtilisateurController {
 
     }
 
-    @PostMapping("/checkEmail")
-    public AccountResponse resetPasswordEmail(@RequestBody ResetPassword resetPassword){
-        validator.validate(resetPassword);
-        var accountResponse = utilisateurService.checkEmail(resetPassword);
-        return accountResponse;
-    }
-
-    @PostMapping("/resetPassword/{token}")
-    public AccountResponse resetPassword(@RequestBody NewPassword newPassword, @PathVariable String token) {
-        return utilisateurService.resetPassword(newPassword, token);
-    }
-
 
     @PutMapping("/UpdateUserById/{idUtilisateur}")
-    public ResponseEntity updateUser(@PathParam("user-id") Integer id,
+    public ResponseEntity<Void> updateUser(@PathParam("user-id") Integer id,
                                      @RequestParam String firstName,
                                      @RequestParam String lastName,
                                      @RequestParam String email,
@@ -119,7 +104,7 @@ public class UtilisateurController {
     }
 
     @PostMapping("/{id}/addAdresseToUser")
-    public ResponseEntity addAdresseToUser(@RequestBody AdresseDto adresse) {
+    public ResponseEntity<UtilisateurDto> addAdresseToUser(@RequestBody AdresseDto adresse) {
 
         adresseSer.addAdresseToUser(adresse);
         return ResponseEntity.ok().build();
